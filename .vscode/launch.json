@@ -1,0 +1,30 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "a1",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "train", 
+                "--env_config", 
+                "data/envs/dm_cheetah.yaml", 
+                "--agent_config", 
+                "a1/dm_cheetah_bc_agent.yaml", 
+                "--log_file", 
+                "output/log.txt", 
+                "--out_model_file", 
+                "output/model.pt", 
+                "--max_samples", 
+                "20000", 
+                "--visualize", 
+            ]
+        }
+    ]
+}
