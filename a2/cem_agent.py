@@ -80,7 +80,7 @@ class CEMAgent(base_agent.BaseAgent):
         train_return = np.mean(rets)
         train_ep_len = np.mean(ep_lens)
         num_eps = self._population_size * self._eps_per_candidate
-        mean_param_std = torch.mean(new_std)
+        mean_param_std = np.mean(new_std)
 
         train_info = {
             "mean_return": train_return,
@@ -103,7 +103,7 @@ class CEMAgent(base_agent.BaseAgent):
 
         # placeholder
         candidates = torch.zeros([n, param_size], device=self._device)
-        candidates = torch.normal(self._param_mean.expand(n, -1), self._param_std.expand(n, -1))
+        candidates = torch.normal(self._param_mean[None, :].tile(n, 1), self._param_std[None, :].tile(n, 1))
 
         return candidates
 
@@ -143,7 +143,7 @@ class CEMAgent(base_agent.BaseAgent):
         new_std = torch.ones(param_size, device=self._device)
         best_params_n = int(params.shape[0] * self._elite_ratio)
         best_params = np.sort(rets)[-best_params_n:]
-        new_mean = torch.mean(best_params, dim=0)
-        new_std = torch.std(best_params, dim=0)
+        new_mean = np.mean(best_params)
+        new_std = np.std(best_params)
 
         return new_mean, new_std
