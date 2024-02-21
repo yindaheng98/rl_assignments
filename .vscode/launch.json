@@ -112,6 +112,26 @@
             ]
         },
         {
+            "name": "a2 cheetah cem test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "test", 
+                "--env_config", 
+                "data/envs/dm_cheetah.yaml", 
+                "--agent_config", 
+                "a2/dm_cheetah_cem_agent.yaml", 
+                "--model_file", 
+                "output/cheetah_cem_model.pt", 
+                "--test_episodes", 
+                "20", 
+                "--visualize", 
+            ]
+        },
+        {
             "name": "a2 cheetah pg train",
             "type": "debugpy",
             "request": "launch",
@@ -132,6 +152,26 @@
                 "100000000", 
                 "--device", 
                 "cuda"
+            ]
+        },
+        {
+            "name": "a2 cheetah pg test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "test", 
+                "--env_config", 
+                "data/envs/dm_cheetah.yaml", 
+                "--agent_config", 
+                "a2/dm_cheetah_pg_agent.yaml", 
+                "--model_file", 
+                "output/cheetah_pg_model.pt", 
+                "--test_episodes", 
+                "20", 
+                "--visualize", 
             ]
         }
     ]
