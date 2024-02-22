@@ -103,7 +103,7 @@ class CEMAgent(base_agent.BaseAgent):
 
         # placeholder
         candidates = torch.zeros([n, param_size], device=self._device)
-        candidates = torch.normal(self._param_mean[None, :].tile(n, 1), self._param_std[None, :].tile(n, 1))
+        candidates = torch.normal(self._param_mean.reshape(1, -1).tile(n, 1), self._param_std.reshape(1, -1).tile(n, 1))
 
         return candidates
 
