@@ -173,6 +173,29 @@
                 "20", 
                 "--visualize", 
             ]
+        },
+        {
+            "name": "a3 train",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "train", 
+                "--env_config", 
+                "data/envs/atari_pong.yaml", 
+                "--agent_config", 
+                "a3/atari_pong_dqn_agent.yaml", 
+                "--log_file", 
+                "output/atari_pong_dqn/atari_pong_dqn_log.txt", 
+                "--out_model_file", 
+                "output/atari_pong_dqn_model.pt", 
+                "--max_samples", 
+                "3000000", 
+                "--device", 
+                "cuda"
+            ]
         }
     ]
 }
