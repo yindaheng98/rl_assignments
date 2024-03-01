@@ -196,6 +196,26 @@
                 "--device", 
                 "cuda"
             ]
+        },
+        {
+            "name": "a3 test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "test", 
+                "--env_config", 
+                "data/envs/atari_pong.yaml", 
+                "--agent_config", 
+                "a3/atari_pong_dqn_agent.yaml", 
+                "--model_file", 
+                "output/atari_pong_dqn_model.pt", 
+                "--test_episodes", 
+                "20", 
+                "--visualize", 
+            ]
         }
     ]
 }

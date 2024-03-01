@@ -125,6 +125,9 @@ class DQNAgent(base_agent.BaseAgent):
         # placeholder
         prob = 1.0
 
+        linear_anneal = min(self._sample_count/self._exp_anneal_samples, 1)
+        prob = (1-linear_anneal) * self._exp_prob_beg + linear_anneal * self._exp_prob_end
+        
         return prob
 
     def _sample_action(self, qs):
@@ -140,6 +143,11 @@ class DQNAgent(base_agent.BaseAgent):
 
         # placeholder
         a = torch.zeros(qs.shape[0], device=self._device, dtype=torch.int64)
+        
+        if np.random.rand() < exp_prob:
+            a = torch.randint(0, qs.shape[1], (qs.shape[0],), device=self._device, dtype=torch.int64)
+        else:
+            a = torch.argmax(qs, dim=-1)
         return a
     
     def _compute_tar_vals(self, r, norm_next_obs, done):
@@ -155,6 +163,8 @@ class DQNAgent(base_agent.BaseAgent):
         # placeholder
         tar_vals = torch.zeros_like(r)
 
+        tar_vals = r + self._discount * torch.max(self._tar_model.eval_q(norm_next_obs), dim=-1)[0] * (1-done)
+
         return tar_vals
 
     def _compute_q_loss(self, norm_obs, a, tar_vals):
@@ -168,6 +178,9 @@ class DQNAgent(base_agent.BaseAgent):
         # placeholder
         loss = torch.zeros(1)
         
+        qs = self._model.eval_q(norm_obs)
+        q_val = torch.gather(qs, 1, a).squeeze()
+        loss = torch.nn.functional.mse_loss(q_val, tar_vals)
         return loss
     
     def _sync_tar_model(self):
@@ -177,5 +190,6 @@ class DQNAgent(base_agent.BaseAgent):
         HINT: self._model.parameters() can be used to retrieve a list of tensors containing
         the parameters of a model.
         '''
+        self._tar_model.load_state_dict(self._model.state_dict())
         
         return
