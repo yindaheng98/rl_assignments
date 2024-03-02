@@ -125,8 +125,8 @@ class DQNAgent(base_agent.BaseAgent):
         # placeholder
         prob = 1.0
 
-        linear_anneal = min(self._sample_count/self._exp_anneal_samples, 1)
-        prob = (1-linear_anneal) * self._exp_prob_beg + linear_anneal * self._exp_prob_end
+        linear_anneal = max(1, min(self._sample_count/self._exp_anneal_samples, 1))
+        prob = (1 - linear_anneal) * self._exp_prob_beg + linear_anneal * self._exp_prob_end
         
         return prob
 
@@ -145,7 +145,7 @@ class DQNAgent(base_agent.BaseAgent):
         a = torch.zeros(qs.shape[0], device=self._device, dtype=torch.int64)
         
         if np.random.rand() < exp_prob:
-            a = torch.randint(0, qs.shape[1], (qs.shape[0],), device=self._device, dtype=torch.int64)
+            a = torch.tensor([self._env.get_action_space().sample()])
         else:
             a = torch.argmax(qs, dim=-1)
         return a
@@ -163,7 +163,7 @@ class DQNAgent(base_agent.BaseAgent):
         # placeholder
         tar_vals = torch.zeros_like(r)
 
-        tar_vals = r + self._discount * torch.max(self._tar_model.eval_q(norm_next_obs), dim=-1)[0] * (1-done)
+        tar_vals = r + self._discount * (1-done) * torch.max(self._tar_model.eval_q(norm_next_obs), dim=-1)[0]
 
         return tar_vals
 
