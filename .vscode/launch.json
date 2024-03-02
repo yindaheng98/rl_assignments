@@ -175,7 +175,7 @@
             ]
         },
         {
-            "name": "a3 train",
+            "name": "a3 pong train",
             "type": "debugpy",
             "request": "launch",
             "program": "run.py",
@@ -198,7 +198,7 @@
             ]
         },
         {
-            "name": "a3 test",
+            "name": "a3 pong test",
             "type": "debugpy",
             "request": "launch",
             "program": "run.py",
@@ -212,6 +212,49 @@
                 "a3/atari_pong_dqn_agent.yaml", 
                 "--model_file", 
                 "output/atari_pong_dqn_model.pt", 
+                "--test_episodes", 
+                "20", 
+                "--visualize", 
+            ]
+        },
+        {
+            "name": "a3 breakout train",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "train", 
+                "--env_config", 
+                "data/envs/atari_breakout.yaml", 
+                "--agent_config", 
+                "a3/atari_breakout_dqn_agent.yaml", 
+                "--log_file", 
+                "output/atari_breakout_dqn/atari_pong_dqn_log.txt", 
+                "--out_model_file", 
+                "output/atari_breakout_dqn_model.pt", 
+                "--max_samples", 
+                "3000000", 
+                "--device", 
+                "cuda"
+            ]
+        },
+        {
+            "name": "a3 breakout test",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--mode", 
+                "test", 
+                "--env_config", 
+                "data/envs/atari_breakout.yaml", 
+                "--agent_config", 
+                "a3/atari_breakout_dqn_agent.yaml", 
+                "--model_file", 
+                "output/atari_breakout_dqn_model.pt", 
                 "--test_episodes", 
                 "20", 
                 "--visualize", 
