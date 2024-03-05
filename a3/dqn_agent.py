@@ -145,7 +145,7 @@ class DQNAgent(base_agent.BaseAgent):
         a = torch.zeros(qs.shape[0], device=self._device, dtype=torch.int64)
         
         if np.random.rand() < exp_prob:
-            a = torch.tensor([self._env.get_action_space().sample()])
+            a = torch.randint(0, qs.shape[1], (qs.shape[0],))
         else:
             a = torch.argmax(qs, dim=-1)
         return a
